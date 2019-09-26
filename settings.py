@@ -1,5 +1,4 @@
-from flask import Flask
-from local_values import env_value
+from local_values.reader import env_value
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 

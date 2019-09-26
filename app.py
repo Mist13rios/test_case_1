@@ -1,5 +1,5 @@
 from flask import Flask
-from local_values import env_value
+from local_values.reader import env_value
 
 app = Flask(__name__)
 app.debug = env_value('DEBUG', default='False')
