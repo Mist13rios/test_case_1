@@ -1,7 +1,9 @@
 from flask import Flask
+from local_values import env_value
 
 app = Flask(__name__)
-app.debug = True
+app.debug = env_value('DEBUG', default='False')
+app.secret_key = env_value('SECRET_KEY')
 
 
 @app.route('/')
