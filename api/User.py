@@ -1,4 +1,4 @@
-from sqlalchemy import Session
+# from sqlalchemy import Session
 from flask_restful import Resource, Api
 
 from app import app
