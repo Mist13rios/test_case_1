@@ -1,22 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Login page</title>
-    <script src="/static/jquery/jquery-3.4.1.min.js"></script>
-    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    <link href="/static/css/main.css" rel="stylesheet">
-</head>
-<body>
+{% extends 'index.html' %}
+
+{% block main %}
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <!-- Icon -->
             <div class="fadeIn first">
-                <img src="" id="icon" alt="User Icon" />
+                <img src="/static/img/logo.jpg" id="icon" alt="User Icon" />
             </div>
+
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
                     <ul class=flashes>
@@ -26,12 +17,13 @@
                     </ul>
                 {% endif %}
             {% endwith %}
+
             <!-- Login Form -->
-            <form method="POST">
+            <form method="POST" onsubmit="return validate()">
                 {{ form.csrf_token }}
                 <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
                 <input type="text" id="password" class="fadeIn third" name="password" placeholder="password">
-                <input type="submit" class="fadeIn fourth" value="Log In">
+                <input type="submit" id="submit" class="fadeIn fourth" value="Log In">
             </form>
 
             <!-- Remind Passowrd -->
@@ -41,4 +33,4 @@
 
           </div>
     </div>
-</body>
+{% endblock %}

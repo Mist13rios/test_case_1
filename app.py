@@ -19,14 +19,14 @@ db_session = Session()
 @auth_check
 def profile_info(user=None):
     user = db_session.query(User).filter_by(email=session['login'], password=session['password']).first()
-    return render_template('profile.html', user=user)
+    return render_template('profile.html', user=user, page_name='Profile')
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_post():
     form = UserForm()
     if request.method == 'GET':
-        return render_template('login.html', form=form)
+        return render_template('login.html', form=form, page_name='Login')
 
     login = form.login.data
     password = form.password.data
@@ -49,7 +49,7 @@ def login_post():
 @auth_check
 def logout():
     session.clear()
-    return 'Logout'
+    return redirect(url_for('login_post'))
 
 
 if __name__ == '__main__':

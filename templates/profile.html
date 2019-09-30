@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile page</title>
-</head>
-<body>
+{% extends 'index.html' %}
+
+{% block main %}
+
     <h1 class="title">
         Hello, {{user.first_name}} {{user.last_name}} !
     </h1>
-</body>
-</html>
+
+    <form action="/logout">
+        <input type="submit" id="submit" class="fourth" value="Log Out">
+    </form>
+
+{% endblock %}
