@@ -3,6 +3,6 @@ from wtforms import StringField
 from wtforms.validators import DataRequired
 
 
-class MyForm(FlaskForm):
+class UserForm(FlaskForm):
     username = StringField('name', validators=[DataRequired()])
     password = StringField('password', validators=[DataRequired()])

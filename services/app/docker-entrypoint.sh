@@ -4,7 +4,7 @@ set -e
 
 chown -R $SYSTEM_USER:$SYSTEM_GROUP /var/www/logs
 
-gosu $SYSTEM_USER bash -c " source /var/www/env/bin/activate && alembic upgrade head"
+gosu $SYSTEM_USER bash -c " source /var/www/env/bin/activate && alembic upgrade head && python create_new_user.py"
 
 case "$1" in
     gunicorn|python)

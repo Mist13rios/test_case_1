@@ -1,8 +1,10 @@
-# from sqlalchemy import Session
+from settings import Session
 from flask_restful import Resource, Api
 
 from app import app
+
 api = Api(app)
+db_session = Session()
 
 
 class UserApi(Resource):
@@ -19,4 +21,5 @@ class UserApi(Resource):
     def delete(self, user_id):
         return {"deleted user': 'user_id"}
 
-api.add_resource(UserApi, "/user/<string:user_id>")
+
+api.add_resource(UserApi, "/api/user/<string:user_id>")
