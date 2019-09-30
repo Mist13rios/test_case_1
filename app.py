@@ -1,35 +1,36 @@
-from flask import Flask
 from local_values.reader import env_value
-from flask import flash, render_template, redirect, url_for, request, session
+from flask import Flask, flash, render_template, redirect, url_for, request, session
 from models import User
 from forms import UserForm
 from settings import Session
+from api.User import api_bp
+from auth import auth_check
+
 
 app = Flask(__name__)
 app.debug = env_value('DEBUG', default='False')
 app.secret_key = env_value('SECRET_KEY')
 
+app.register_blueprint(api_bp)
+db_session = Session()
+
 
 @app.route('/')
+@auth_check
 def profile_info(user=None):
-    if ('login' and 'password') in session:
-        return render_template('profile.html')
-    else:
-        return redirect(url_for('login_post'))
+    user = db_session.query(User).filter_by(email=session['login'], password=session['password']).first()
+    return render_template('profile.html', user=user)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_post():
-    if ('login' and 'password') in session:
-        return redirect(url_for('profile_info'))
     form = UserForm()
     if request.method == 'GET':
         return render_template('login.html', form=form)
 
     login = form.login.data
     password = form.password.data
-    db_session = Session()
-    user = db_session.query(User).filter_by(email=login).first()
+    user = db_session.query(User).filter_by(email=login, password=password).first()
 
     if not user:
         flash('No existing user')
@@ -45,6 +46,7 @@ def login_post():
 
 
 @app.route('/logout')
+@auth_check
 def logout():
     session.clear()
     return 'Logout'
