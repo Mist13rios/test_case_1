@@ -13,12 +13,14 @@ class UserApi(Resource):
 
     def get(self, user_id):
         if ('login' and 'password') not in session:
+            # TODO добавить код ошибки, 403, так как https не настроен
             return {"Message": "Permission denied"}
         user = db_session.query(User).filter_by(email=session['login'], password=session['password']).first()
         return {"Message": "Hello mr.{} {}, our user # {}".format(user.first_name, user.last_name, user_id)}
 
     @auth_check
     def post(self, user_id):
+        # TODO добавить валидацию формы и сообщения ошибок
         return {"waiting for new": "user_id"}
 
     @auth_check
