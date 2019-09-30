@@ -1,7 +1,7 @@
 from local_values.reader import env_value
 from flask import Flask, flash, render_template, redirect, url_for, request, session
 from models import User
-from forms import UserForm
+from forms import LoginForm
 from settings import Session
 from api.User import api_bp
 from auth import auth_check
@@ -24,7 +24,7 @@ def profile_info(user=None):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login_post():
-    form = UserForm()
+    form = LoginForm()
     if request.method == 'GET':
         return render_template('login.html', form=form, page_name='Login')
 
